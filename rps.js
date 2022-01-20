@@ -1,99 +1,172 @@
-// 1. Begin with a function called computerPlay that will randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’.
-// 2. Write a function that plays a single round of Rock Paper Scissors. 
-// The function should take two parameters - the playerSelection and computerSelection - 
-// and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
-// Make your function’s playerSelection parameter case-insensitive (so users can input rock, ROCK, RocK or any other variation).
+// Keyboard control for music
 
+document.addEventListener("keyup", function(event) {
+
+    //  Mute music by pressing 'm'
+    if (event.keyCode === 77) {
+
+        document.getElementById('background_audio').muted = true;
+    };
+    //  Play music by pressing 'p'
+
+    if (event.keyCode === 80) {
+
+        document.getElementById('background_audio').muted = false;
+    }
+});
+
+// Game Start - Assign the computer a randon Rock, Paper or Scissors
 function computerPlay() {
+
     // Array for Rock, Paper, Scissors
     let compResult = ["rock", "paper", "scissors"]
     // RandomNumber to iterate through the Array
     let randomNumber = Math.floor(Math.random() * 3);
-    // Return Random item between 0 - 2 from Array
+    // Return Random Array Item between 0 - 2
     return compResult[randomNumber];
-}
-
-// Prompt to get User Input
-let playerInput = prompt("What do you want to play?");
-
-let playerScore = 0;
-let computerScore = 0;
-let computerWin = 0;
-let playerWin = 0;
-
-function playRound(playerSelection, computerSelection) {
-
-
-    //Check if draw
-    if (playerSelection === computerSelection) {
-        return "🙅🏿‍♂️ Draw, lol";
-    } 
-
-    // Player has Rock variable für ergebnis speichern
-    if (playerSelection === "rock") {
-        if (computerSelection === "paper") {
-            computerWin = computerScore++;
-            return "😭 You loose! 👋🏽Paper beats ✊🏽 Rock";
-
-        } else {
-
-            playerWin = playerScore++;
-            return "🤩 You Win! ✊🏽 Rock beats ✌🏽 Scissors";
-        };
     }
 
-    // Player has Paper
-    if (playerSelection === "paper") {
-        if (computerSelection === "scissors") {
+    // Get player selection rock
+    document.getElementById("buttonRock").addEventListener("click", function() {
+      
+      // Assign Rock to Variable  
+      let playerSelection = "rock";
 
-            computerWin = computerScore++;
-            return "😭 You loose! ✌🏽 Scissors beats 👋🏽 Paper";
+      // Assign the computerPlay() function to a new variable for better readability
+      let computerSelection = computerPlay();
 
-        } else {
+      // Call playRound() function to play a round with player and computer input and return a result  
+      playRound(playerSelection, computerSelection);
 
-            playerWin = playerScore++;
-            return "🤩 You Win! 👋🏽 Paper beats ✊🏽 Rock";
+    });
 
-        };
-    }
+    // Get player selection Paper
+    document.getElementById("buttonPaper").addEventListener("click", function() {
+      
+      //Assign Paper to variable
+      let playerSelection = "paper";
+      
+      // Assign the computerPlay() function to a new variable for better readability
+      let computerSelection = computerPlay();
 
-    // Player has Scissors
-    if (playerSelection === "scissors") {
-        if (computerSelection === "rock") {
+      // Call playRound() function to play a round with player and computer input and return of result  
+      playRound(playerSelection, computerSelection);
 
-            computerWin = computerScore++;
-            return "😭 You loose! ✊🏽 Rock beats ✌🏽 Scissors";
+    });
+
+    // Get player selection Scissors
+    document.getElementById("buttonScissors").addEventListener("click", function() {
+
+      // Assign Scissors to Variable  
+      let playerSelection = "scissors";
+      
+      // Assign the computerPlay() function to a new variable for better readability
+      let computerSelection = computerPlay();
+
+      // Call playRound() function to play a round with player and computer input and return of result  
+      playRound(playerSelection, computerSelection);
+
+    });
+
+    // Declare Score variables 
+    let playerScore     = 0;
+    let computerScore   = 0;
+    let gameCounter     = 0;
+
+    function playRound(playerSelection, computerSelection) {
+
+        // This function check for the numbers of games played and declares a winner
+        function announceWinner(gamecounter, computerScore, playerScore) {
+            if (gameCounter == 5) {
+                if (computerScore > playerScore) {
+                    alert("The world is doomed! Computer wins! 🤖");
+                    location.reload(); 
+                } else {
+                    alert("Humans have a bright future! You win! 🎉 ");
+                    location.reload(); 
+                };
+            };
+        }
+
+        // Check if draw
+        if (playerSelection == computerSelection) {
+            document.getElementById("result").innerText = "[Played] \n\n" + " 🙅🏿‍♂️ Draw, lol \n\n You have the same selection \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
             
-        } else {
-            playerWin = playerScore++;
-            return "🤩 You Win! ✌🏽 Scissors beats 👋🏽 Paper";
-            
-        };
-    }       
+        } 
 
-}
+        // Player has Rock
+        if (playerSelection === "rock") {
+            if (computerSelection === "paper") {
+                
+                // Increase Computer Score
+                computerScore = computerScore+1;
 
-// Playing variables with Player Input to Lower Case, so the user can type on big & small letters
-let playerSelection = playerInput.toLowerCase();
-let computerSelection = computerPlay();
+                // Increase Gamecount
+                gameCounter   = gameCounter+1;
 
-function game() {
-   let gameCounter = 0;
+                // Return results in the result div
+                document.getElementById("result").innerText = "[Played] \n\n" + " 😭 You loose! \n\n 👋🏽 Paper beats ✊🏽 Rock \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+               
+            } else if (computerSelection === "scissors") {
 
-   const round1 = playRound(playerSelection, computerSelection);
+                // Increase PlayerScore
+                playerScore = playerScore+1;
 
-   const round2 = playRound(playerSelection, computerSelection);
+                //Increase Gamecount
+                gameCounter   = gameCounter+1;                
 
-   return "Round 1:" + round1 + '\n' + "Player Score: " + playerWin + '\n' + "Computer Score: " + computerWin + '\n' + '\n' + "Round 2:" + round2 + playerScore + computerScore + playerWin + computerWin;
+                document.getElementById("result").innerText = "[Played] \n\n" + " 🤩 You Win! \n\n ✊🏽 Rock beats ✌🏽 Scissors \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+             
+            };
+        }
 
-   
-}
+        // Player has Paper
+        if (playerSelection === "paper") {
+            if (computerSelection === "scissors") {
+                
+                // Increase Computer Score
+                computerScore = computerScore+1;
 
-console.log(game());
-console.log("Player:" + playerSelection);
-console.log("Computer:" + computerSelection);
+                // Increase Gamecount
+                gameCounter   = gameCounter+1;
 
+                document.getElementById("result").innerText = "[Played] \n\n" + " 😭 You loose! \n\n ✌🏽 Scissors beats 👋🏽 Paper \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+                      
+            } else if (computerSelection === "rock") {
+                // Increase PlayerScore
+                playerScore = playerScore+1;
 
+                // Increase Gamecount
+                gameCounter   = gameCounter+1;
 
+                document.getElementById("result").innerText = "[Played] \n\n" + " 🤩 You Win! \n\n 👋🏽 Paper beats ✊🏽 Rock \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+                     
+            };
+        }
 
+        // Player has Scissors
+        if (playerSelection === "scissors") {
+            if (computerSelection === "rock") {
 
+                 // Increase Computer Score
+                computerScore = computerScore+1; 
+
+                // Increase Gamecount
+                gameCounter   = gameCounter+1;    
+
+                document.getElementById("result").innerText = "[Played] \n\n" + " 😭 You loose! \n\n ✊🏽 Rock beats ✌🏽 Scissors \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+                    
+            } else if (computerSelection === "paper") {
+                
+                // Increase PlayerScore
+                playerScore = playerScore+1; 
+                
+                // Increase Gamecount
+                gameCounter   = gameCounter+1;                
+                
+                document.getElementById("result").innerText = "[Played] \n\n" + " 🤩 You Win! \n\n ✌🏽 Scissors beats 👋🏽 Paper \n\n" + "You: " + playerSelection + "\n" + "Computer: " + computerSelection + "\n\n" + "[Scoreboard] \n\n" + "Rounds: " + gameCounter + "\n\nComputer: " + computerScore + "\n\nYou: " + playerScore;
+                  
+            };
+        }       
+        announceWinner();
+        }
