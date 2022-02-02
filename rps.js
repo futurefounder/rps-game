@@ -72,12 +72,18 @@ function computerPlay() {
     let playerScore     = 0;
     let computerScore   = 0;
     let gameCounter     = 0;
+    let playingRounds   = 0;
 
-    function playRound(playerSelection, computerSelection) {
+    // Game rounds
+    function gameRounds() {
+        let playingRounds = document.getElementById("gameRoundsInput").value;
+       }
+
+    function playRound(playerSelection, computerSelection, playingRounds) {
 
         // This function check for the numbers of games played and declares a winner
-        function announceWinner(gamecounter, computerScore, playerScore) {
-            if (gameCounter == 5) {
+        function announceWinner(gamecounter, computerScore, playerScore, playingRounds) {
+            if (gameCounter == playingRounds) {
                 if (computerScore > playerScore) {
                     alert("The world is doomed! Computer wins! 🤖");
                     location.reload(); 
