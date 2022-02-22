@@ -72,18 +72,27 @@ function computerPlay() {
     let playerScore     = 0;
     let computerScore   = 0;
     let gameCounter     = 0;
-    let playingRounds   = 0;
+    // let playingRounds   = 5;
+    // console.log(playingRounds);
 
     // Game rounds
     function gameRounds() {
         let playingRounds = document.getElementById("gameRoundsInput").value;
+        return gameRounds;
+        console.log("playing rounds in GAMEROUND" + typeof(playingRounds))
        }
-
-    function playRound(playerSelection, computerSelection, playingRounds) {
+    
+    function playRound(playerSelection, computerSelection) {
+        // let innerRounds = parseInt(playingRounds);
+        // console.log("playing rounds in playRound" + playingRounds)
 
         // This function check for the numbers of games played and declares a winner
         function announceWinner(gamecounter, computerScore, playerScore, playingRounds) {
-            if (gameCounter == playingRounds) {
+            let innerRounds2 = playingRounds;
+
+            // console.log("plaing rounds in WINNER" + typeof(innerRounds))
+            
+            if (gameCounter == 5) {
                 if (computerScore > playerScore) {
                     alert("The world is doomed! Computer wins! 🤖");
                     location.reload(); 
@@ -176,3 +185,5 @@ function computerPlay() {
         }       
         announceWinner();
         }
+
+    
